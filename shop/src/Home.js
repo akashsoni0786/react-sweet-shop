@@ -119,7 +119,7 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1, fontFamily:"'Satisfy', cursive" }}
             >
-              MySweets
+              Shree Sweets
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">

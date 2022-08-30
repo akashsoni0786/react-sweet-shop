@@ -3,19 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import SignInSide from './Login';
-import SignUp from './Signup';
-import Contxt from './Context';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Dashboard from './Home';
+import Home from './Home';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
- <BrowserRouter>
-    <Contxt>
     <App />
-    </Contxt>
-    </BrowserRouter>
   </React.StrictMode>
 );
 
