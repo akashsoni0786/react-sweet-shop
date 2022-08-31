@@ -4,20 +4,30 @@ import "./App.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Divider, Tooltip } from "@mui/material";
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import YouTubeIcon from '@mui/icons-material/YouTube';
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import { Link } from "react-router-dom";
+import { contxtname } from "./Context";
+import Footer from "./Footer";
 const Home = () => {
+  const contxt = React.useContext(contxtname);
   const goleft = () => {
     document.getElementById("sweetcarousel").scrollLeft -= 220;
   };
   const goright = () => {
     document.getElementById("sweetcarousel").scrollLeft += 220;
   };
+  const sendtocategorypage=(e)=>{
+    contxt.setCat_Products(e.target.id);
+  }
+  const sendtocategorypage2=(e)=>{
+    contxt.setCat_Products(e.target.textContent);
+  }
   return (
-    <div>
+    <div style={{ marginTop: "20px" }}>
       <MyCarousel />
       <p className="heading">• • Popular Items • •</p>
       <div className="sweetcarouselparent">
@@ -25,77 +35,125 @@ const Home = () => {
           <ArrowBackIosIcon sx={{ color: "white", marginLeft: "8px" }} />
         </div>
         <div id="sweetcarousel" className="sweetscarousel">
+        <div className="sweetcard">
+            <Link to="/category">
+              <img
+              onClick={sendtocategorypage}
+                id="Modaks"
+                className="sweetpic"
+                alt=""
+                src="https://image2.jdomni.in/banner/29092020/8D/BF/53/654F4AB026C6518C4E97D91213_1601384620509.png?output-format=webp"
+              />
+            </Link>
+            <Link to="/category">
+              <p onClick={sendtocategorypage2}  className="sweetname">Modaks</p>
+            </Link>
+          </div>
           <div className="sweetcard">
-            <img
-              className="sweetpic"
-              alt=""
-              src="https://image3.jdomni.in/banner/29092020/46/8E/EE/99F79491803B73EE5E595F35FD_1601377931546.jpg?output-format=webp"
-            />
-            <p className="sweetname">Burfi</p>
+            <Link to="/category">
+              <img
+              onClick={sendtocategorypage}
+                id="Burfi"
+                className="sweetpic"
+                alt=""
+                src="https://image3.jdomni.in/banner/29092020/46/8E/EE/99F79491803B73EE5E595F35FD_1601377931546.jpg?output-format=webp"
+              />
+            </Link>
+            <Link to="/category">
+              <p onClick={sendtocategorypage2} className="sweetname">Burfi</p>
+            </Link>
           </div>
 
           <div className="sweetcard">
-            <img
-              className="sweetpic"
-              alt=""
-              src="https://image3.jdomni.in/banner/29092020/8D/BE/2B/F7ABDB9174C6E382E3C0AFEC24_1601377949409.png?output-format=webp"
-            />
-            <p className="sweetname">Gulab Jamun</p>
+            <Link to="/category">
+              <img
+              onClick={sendtocategorypage}
+                id="Gulab Jamun"
+                className="sweetpic"
+                alt=""
+                src="https://image3.jdomni.in/banner/29092020/8D/BE/2B/F7ABDB9174C6E382E3C0AFEC24_1601377949409.png?output-format=webp"
+              />
+            </Link>
+            <Link to="/category">
+              <p onClick={sendtocategorypage2}  className="sweetname">Gulab Jamun</p>
+            </Link>
           </div>
 
           <div className="sweetcard">
-            <img
-              className="sweetpic"
-              alt=""
-              src="https://image2.jdomni.in/banner/29092020/E6/01/0B/062554AC29E8E7F7D8ABA50BB8_1601377968296.png?output-format=webp"
-            />
-            <p className="sweetname">Soan Papdi</p>
+            <Link to="/category">
+              <img
+              onClick={sendtocategorypage}
+                id="Soan Papdi"
+                className="sweetpic"
+                alt=""
+                src="https://image2.jdomni.in/banner/29092020/E6/01/0B/062554AC29E8E7F7D8ABA50BB8_1601377968296.png?output-format=webp"
+              />
+            </Link>
+            <Link to="/category">
+              <p onClick={sendtocategorypage2}  className="sweetname">Soan Papdi</p>
+            </Link>
           </div>
 
           <div className="sweetcard">
-            <img
-              className="sweetpic"
-              alt=""
-              src="https://image3.jdomni.in/banner/29092020/0E/91/6B/BD1F7C8CFD51A7B0001FD7F05D_1601378334221.jpg?output-format=webp"
-            />
-            <p className="sweetname">Rasgulla</p>
+            <Link to="/category">
+              <img
+              onClick={sendtocategorypage}
+                id="Rasgulla"
+                className="sweetpic"
+                alt=""
+                src="https://image3.jdomni.in/banner/29092020/0E/91/6B/BD1F7C8CFD51A7B0001FD7F05D_1601378334221.jpg?output-format=webp"
+              />
+            </Link>
+            <Link to="/category">
+              <p onClick={sendtocategorypage2}  className="sweetname">Rasgulla</p>
+            </Link>
           </div>
 
           <div className="sweetcard">
-            <img
-              className="sweetpic"
-              alt=""
-              src="https://image3.jdomni.in/banner/29092020/C5/B3/22/40C3D9E18F29F8116EF7430C8F_1601383569706.png?output-format=webp"
-            />
-            <p className="sweetname">Cham Cham</p>
+            <Link to="/category">
+              <img
+              onClick={sendtocategorypage}
+                id="Cham Cham"
+                className="sweetpic"
+                alt=""
+                src="https://image3.jdomni.in/banner/29092020/C5/B3/22/40C3D9E18F29F8116EF7430C8F_1601383569706.png?output-format=webp"
+              />
+            </Link>
+            <Link to="/category">
+              <p onClick={sendtocategorypage2}  className="sweetname">Cham Cham</p>
+            </Link>
           </div>
 
           <div className="sweetcard">
-            <img
-              className="sweetpic"
-              alt=""
-              src="https://image3.jdomni.in/banner/29092020/E0/D7/1B/EB3EED9B14BC8E64D03905C639_1601385862543.png?output-format=webp"
-            />
-            <p className="sweetname">Rasmalai</p>
+            <Link to="/category">
+              <img
+              onClick={sendtocategorypage}
+                id="Rasmalai"
+                className="sweetpic"
+                alt=""
+                src="https://image3.jdomni.in/banner/29092020/E0/D7/1B/EB3EED9B14BC8E64D03905C639_1601385862543.png?output-format=webp"
+              />
+            </Link>
+            <Link to="/category">
+              <p onClick={sendtocategorypage2}  className="sweetname">Rasmalai</p>
+            </Link>
           </div>
 
+          
+{/* 
           <div className="sweetcard">
-            <img
-              className="sweetpic"
-              alt=""
-              src="https://image2.jdomni.in/banner/29092020/8D/BF/53/654F4AB026C6518C4E97D91213_1601384620509.png?output-format=webp"
-            />
-            <p className="sweetname">Modak</p>
-          </div>
-
-          <div className="sweetcard">
-            <img
-              className="sweetpic"
-              alt=""
-              src="https://image3.jdomni.in/banner/29092020/87/5D/5C/9E695B564CE8A98F159BCC71D3_1601384755423.png?output-format=webp"
-            />
-            <p className="sweetname">Jalebi</p>
-          </div>
+            <Link to="/category">
+              <img
+              onClick={sendtocategorypage}
+                className="sweetpic"
+                alt=""
+                src="https://image3.jdomni.in/banner/29092020/87/5D/5C/9E695B564CE8A98F159BCC71D3_1601384755423.png?output-format=webp"
+              />
+            </Link>
+            <Link to="/category">
+              <p onClick={sendtocategorypage2}  className="sweetname">Jalebi</p>
+            </Link>
+          </div> */}
         </div>
         <div onClick={goright} className="carouselbtn">
           <ArrowForwardIosIcon sx={{ color: "white", marginLeft: "5px" }} />
@@ -110,7 +168,7 @@ const Home = () => {
           <p className="heading">• • About Us • •</p>
           <p className="aboutus">
             After serving so many customers, today we can proudly say that our
-            shop, Sweet Junction, situated at Malad West, Mumbai, Maharashtra,
+            shop, Sweet Junction, situated at Vishwas Khand, Lucknow, Uttar Pradesh,
             is home to a wide range of sweets that cater to the diverse taste
             buds of every patron. All of our delicacies are made using unique
             recipes that will leave a memorable aftertaste in your mouth. You
@@ -170,33 +228,7 @@ const Home = () => {
         </div>
         <div className="sendbtn">Submit</div>
       </div>
-      <Divider variant="middle" />
-      <div className="footerparent">
-        <div className="footer">
-          <p className="p1">Change languages: </p>
-          <p className="p2">हिंदी</p>
-          <p className="p3">English</p>
-          <p className="p4">मराठी</p>
-          <p className="p5">বাংলা</p>
-          <p className="p6">தமிழ்</p>
-          <p className="p7">ಕನ್ನಡ</p>
-          <p className="p8">മലയാളം</p>
-          <p className="p10">ਪੰਜਾਬੀ</p>
-        </div>
-        <div style={{marginTop:"20px"}}>
-            <Tooltip title="Linkdn">
-            <LinkedInIcon sx={{color:"blue",cursor:"pointer",margin:"0px 5px"}}/>
-            </Tooltip>
-            <Tooltip title="Instagram">
-            <InstagramIcon sx={{color:"#ff1493",cursor:"pointer",margin:"0px 5px"}}/>
-            </Tooltip>
-            <Tooltip title="Github"><GitHubIcon sx={{cursor:"pointer",margin:"0px 5px"}}/></Tooltip>
-            <Tooltip title="Facebook"><FacebookIcon sx={{color:"#3b5998",cursor:"pointer",margin:"0px 5px"}}/></Tooltip>
-            
-            <Tooltip title="Youtube"><YouTubeIcon sx={{color:"red",cursor:"pointer",margin:"0px 5px"}}/></Tooltip>
-            
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 };

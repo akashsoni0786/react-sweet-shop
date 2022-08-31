@@ -165,7 +165,7 @@ cursor: pointer;
   align-items: center;
   margin-top:100px;
   position: fixed;
-  bottom: 80px;
+  bottom: 10px;
   right: 10px;
 }
 .whatsapp{
@@ -178,7 +178,20 @@ cursor: pointer;
   align-items: center;
   margin-top:100px;
   position: fixed;
-  bottom: 80px;
+  bottom: 10px;
+  right: 90px;
+}
+.cart{
+  cursor: pointer;
+  background-color: #e29247;
+  height: 70px;
+  width: 70px;
+  border-radius: 35px;
+  display: flex;
+  align-items: center;
+  margin-top:100px;
+  position: fixed;
+  top: 100px;
   right: 90px;
 }
 .callbtn{
@@ -191,7 +204,7 @@ cursor: pointer;
   align-items: center;
   margin-top:100px;
   position: fixed;
-  bottom: 80px;
+  bottom: 10px;
   left: 10px;
 }
 .contactme{
@@ -201,7 +214,7 @@ cursor: pointer;
 }
 
 .footerparent{
-
+  height: 200px;
   background-color: #E6B578;
   display: flex;
   justify-content: space-between;
@@ -279,6 +292,182 @@ cursor: pointer;
 }
 .p10:hover{
   color: blue;
+}
+.categorypage{
+  margin-top: 90px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.productcard{
+
+  height:450px;
+  background-color: #f3eddc;
+  width: 300px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px ;
+}
+.productpic{
+  cursor: pointer;
+  width: 300px;
+  height: 300px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.pricename{
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+}
+.proname{
+  color: black;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 5px 10px;
+}
+.pprice{
+  color: #FF3030;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 5px 10px;
+  text-align: left;
+}
+.addtocartbtn{
+  margin-top: 15px;
+  width: max-content;
+  padding: 7px 16px;
+  background-color: #e9a24c;
+  color: white;
+  font-size: 22px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.addtocartbtn:hover{
+  background-color: #e68815;
+}
+.productdetailspage{
+  margin-top: 100px ;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px 5px rgb(235, 232, 232);
+  display: flex;
+}
+.detailpropicdiv{
+  padding: 15px;
+  width: 45%;
+  border-radius: 20px;
+}
+.detailpropic{
+ 
+  width: 100%;
+  border-radius: 10px;
+  
+}
+.detailprocartdiv{
+  width: 55%;
+  border-radius: 10px;
+  margin: 15px;
+  background-color: white;
+}
+.detailproname{
+  font-size: 25px;
+  font-weight: 500;
+  margin: 30px 20px;
+}
+.cartbox{
+  background-color: #e4dcdc;
+  /* height: 100px; */
+  padding: 40px;
+}
+.addtocartbtndetails{
+  /* margin-top: 15px; */
+  width: max-content;
+  padding: 10px 55px;
+  background-color: #e9a24c;
+  color: white;
+  font-size: 22px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.addtocartbtndetails:hover{
+  background-color: #e68815;
+}
+.specicationdetails{
+  display: flex;
+  justify-content: start;
+  margin: -10px 20px;
+  font-size: 18px;
+}
+.otpnumber{
+  width: 30px;
+  height: 30px;
+  background-color: #E6B578;
+}
+@media (max-width:800px){
+  .productdetailspage{
+    margin-top: 120px ;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px 5px rgb(235, 232, 232);
+    display: flex;
+    flex-direction: column;
+  }
+  .detailpropicdiv{
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    width: 95%;
+    height: 500px;
+    border-radius: 20px;
+  }
+  .detailpropic{
+   
+    width: 100%;
+    border-radius: 10px;
+    
+  }
+  .detailprocartdiv{
+    width: 95%;
+    border-radius: 10px;
+    margin: 15px;
+    background-color: white;
+  }
+  .detailproname{
+    font-size: 25px;
+    font-weight: 500;
+    margin: 0px 20px;
+  }
+  .cartbox{
+    background-color: #e4dcdc;
+    padding: 40px;
+  }
+  .addtocartbtndetails{
+    width: max-content;
+    padding: 10px 55px;
+    background-color: #e9a24c;
+    color: white;
+    font-size: 22px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .addtocartbtndetails:hover{
+    background-color: #e68815;
+  }
+  .specicationdetails{
+    display: flex;
+    justify-content: start;
+    margin: -10px 20px;
+    font-size: 18px;
+  }
+
 }
 @media (max-width:600px){
   .contactusfomat{

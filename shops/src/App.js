@@ -6,8 +6,12 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import CallIcon from "@mui/icons-material/Call";
 import Popover from "@mui/material/Popover";
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
-import { Button, Typography } from "@mui/material";
-
+import { Badge, Button, IconButton, Tooltip, Typography } from "@mui/material";
+import { Route, Routes } from 'react-router-dom';
+import CategoryProducts from "./CategoryProducts";
+import ProductDetailPage from "./ProductDetailPage";
+import Footer from "./Footer";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 function App() {
   const gototop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -15,14 +19,23 @@ function App() {
   return (
     <div style={{ position: "relative" }}>
       <ResponsiveAppBar />
-      <Home />
+
+
+      <Routes>
+      <Route path='/' element={<Home />}/>
+      <Route path='/category' element={<CategoryProducts />}/>
+      <Route path='/details' element={<ProductDetailPage />}/>
+      </Routes>
+     
+     
+
+
       <div onClick={gototop} className="frontbtns">
         <ArrowCircleUpIcon
           onClick={gototop}
           sx={{ color: "white", marginLeft: "0px", fontSize: "70px" }}
         />
       </div>
-
       <a
         href="https://api.whatsapp.com/send?phone=918448190700&forceIntent=true&load=loadInIOSExternalSafari"
         className="whatsapp"
@@ -31,7 +44,6 @@ function App() {
           sx={{ color: "white", marginLeft: "0px", fontSize: "70px" }}
         />
       </a>
-
       <PopupState variant="popover" popupId="demo-popup-popover">
         {(popupState) => (
           <div>
@@ -63,6 +75,7 @@ function App() {
           </div>
         )}
       </PopupState>
+
     </div>
   );
 }

@@ -1,101 +1,607 @@
 import * as React from "react";
+import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import InputBase from "@mui/material/InputBase";
+import Badge from "@mui/material/Badge";
+import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
+import SearchIcon from "@mui/icons-material/Search";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import MailIcon from "@mui/icons-material/Mail";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import {
+  Alert,
+  FormControl,
+  Input,
+  InputAdornment,
+  InputLabel,
+  Slide,
+  Snackbar,
+  Tooltip,
+} from "@mui/material";
+import { fontWeight } from "@mui/system";
+import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import HomeIcon from "@mui/icons-material/Home";
+import CategoryIcon from "@mui/icons-material/Category";
+import { contxtname } from "./Context";
+import { useNavigate } from "react-router-dom";
+import Modal from "@mui/material/Modal";
+import CallIcon from "@mui/icons-material/Call";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  height: 200,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  // display:"flex",
+  // justifyContent:"center"
+};
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(3),
+    width: "auto",
+  },
+}));
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
 
-const ResponsiveAppBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+const txtstyle = {
+  color: "gray",
+  fontWeight: "900",
+  "&:hover": {
+    color: "orange",
+  },
+};
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+}));
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+export default function PrimarySearchAppBar() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const contxt = React.useContext(contxtname);
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const menuId = "primary-search-account-menu";
+
+  const mobileMenuId = "primary-search-account-menu-mobile";
+
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    handleMobileMenuClose();
+    setState({ ...state, [anchor]: open });
+  };
+  const list = (anchor) => (
+    <Box
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
+        <ListItem key="Modaks" disablePadding>
+          <ListItemButton
+            onClick={() => {
+              contxt.setCat_Products("Modaks");
+              navigate("/category");
+            }}
+          >
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Modaks" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key="Burfi" disablePadding>
+          <ListItemButton
+            onClick={() => {
+              contxt.setCat_Products("Burfi");
+              navigate("/category");
+            }}
+          >
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Burfi" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key="Gulab Jamun" disablePadding>
+          <ListItemButton
+            onClick={() => {
+              contxt.setCat_Products("Gulab Jamun");
+              navigate("/category");
+            }}
+          >
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Gulab Jamun" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key="Soan Papdi" disablePadding>
+          <ListItemButton
+            onClick={() => {
+              contxt.setCat_Products("Soan Papdi");
+              navigate("/category");
+            }}
+          >
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Soan Papdi" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key="Rasgulla" disablePadding>
+          <ListItemButton
+            onClick={() => {
+              contxt.setCat_Products("Rasgulla");
+              navigate("/category");
+            }}
+          >
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Rasgulla" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key="Cham Cham" disablePadding>
+          <ListItemButton
+            onClick={() => {
+              contxt.setCat_Products("Cham Cham");
+              navigate("/category");
+            }}
+          >
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Cham Cham" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key="Rasmalai" disablePadding>
+          <ListItemButton
+            onClick={() => {
+              contxt.setCat_Products("Rasmalai");
+              navigate("/category");
+            }}
+          >
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Rasmalai" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <Divider />
+      <List>
+        <ListItem key="Login" disablePadding>
+          <ListItemButton onClick={handleOpen}>
+            <ListItemIcon>
+              <MailIcon />
+            </ListItemIcon>
+            <ListItemText primary="Login" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key="About" disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <MailIcon />
+            </ListItemIcon>
+            <ListItemText primary="About" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key="Contact" disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <MailIcon />
+            </ListItemIcon>
+            <ListItemText primary="Contact Us" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+    </Box>
+  );
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <Tooltip title="Cart">
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            color="inherit"
+          >
+            <HomeIcon />
+          </IconButton>
+        </Tooltip>
+        <p>Home</p>
+      </MenuItem>
+
+      <MenuItem onClick={toggleDrawer("right", true)}>
+        <Tooltip title="Cart">
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            color="inherit"
+          >
+            <CategoryIcon />
+          </IconButton>
+        </Tooltip>
+        <p>Category</p>
+      </MenuItem>
+
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="error">
+            <ShoppingCartIcon />
+          </Badge>
+        </IconButton>
+        <p>Cart</p>
+      </MenuItem>
+
+      <MenuItem
+        onClick={() => {
+          handleOpen();
+          handleMobileMenuClose();
+        }}
+      >
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="error">
+            <ShoppingCartIcon />
+          </Badge>
+        </IconButton>
+        <p>Login</p>
+      </MenuItem>
+    </Menu>
+  );
+  function TransitionDown(props) {
+    return <Slide {...props} direction="down" />;
+  }
+  const [opensnack, setOpensnack] = React.useState(false);
+  const [opensnackwrong, setOpensnackwrong] = React.useState(false);
+  const [otpsnackwrong, setOtpsnackwrong] = React.useState(false);
+  const [otpsnackright, setOtpsnackright] = React.useState(false);
+  const [transition, setTransition] = React.useState(undefined);
+  const [mobnum, setMobnum] = React.useState(0);
+  const [otp, setOTP] = React.useState();
+  const sendotpsnack = (Transition) => () => {
+      setOpensnack(true);
+      setTransition(() => Transition);
+  };
+
+  const otpfunc=()=>{
+    if(mobnum.length == 10)
+    {
+      setMobnum('');
+      setOpensnack(true);
+      sendotpsnack(TransitionDown);
+    }
+    else
+    {
+      setOpensnackwrong(true);
+      wronginput(TransitionDown);
+    }
+  }
+
+  const otpverify=()=>{
+    if(otp == 1234)
+    {
+      setMobnum('');
+      setOpensnack(true);
+      sendotpsnack(TransitionDown);
+    }
+    else
+    {
+      setOpensnackwrong(true);
+      wronginput(TransitionDown);
+    }
+  }
+
+  const handleClosesnack = () => {
+    setOpensnack(false);
+  };
+  const handleClosesnackwrong = () => {
+    setOpensnackwrong(false);
+  };
+  const handleClosesnackwrongOTP = () => {
+    setOtpsnackwrong(false);
+  };
+
+  const wronginput = (Transition) => () => {
+      setTransition(() => Transition);
+      setOpensnackwrong(true);
+  };
+  const wronginputOTP = (Transition) => () => {
+    setTransition(() => Transition);
+    setOpensnackwrong(true);
+};
   return (
-    <AppBar position="static" sx={{ backgroundColor: "white" }}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-        <Box sx={{ flexGrow: 0,display: { xs: "flex", md: "none" } }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <MenuIcon />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+    <Box sx={{ flexGrow: 1 }}>
+
+      <Snackbar open={opensnackwrong} autoHideDuration={6000} onClose={handleClosesnackwrongOTP}>
+        <Alert onClose={handleClosesnackwrongOTP} severity="error" sx={{ width: '100%' }}>
+        Please enter valid OTP!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={opensnack}
+        onClose={handleClosesnack}
+        TransitionComponent={transition}
+        message="Your OTP for Sweet Junction is 1234"
+        key={transition ? transition.name : ""}
+      />
+
+      <Snackbar open={opensnackwrong} autoHideDuration={6000} onClose={handleClosesnackwrong}>
+        <Alert onClose={handleClosesnackwrong} severity="error" sx={{ width: '100%' }}>
+        Please enter valid mobile number of 10 digits!
+        </Alert>
+      </Snackbar>
+
+
+      <Modal
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box sx={style}>
+          <Typography sx={{ fontSize: "40px", fontWeight: "bold" }}>
+            Register yourself
+          </Typography>
+          <FormControl variant="standard" sx={{display:"none"}}>
+            <InputLabel sx={{fontSize:"15px"}} htmlFor="input-with-icon-adornment">
+              Enter your mobile number
+            </InputLabel>
+            <Input
+              onKeyUp={(e)=>{setMobnum(e.target.value)}}
+              type="Number"
+              sx={{ fontSize: "30px" }}
+              id="input-with-icon-adornment"
+              startAdornment={
+                <InputAdornment position="start">
+                  <CallIcon />
+                </InputAdornment>
+              }
+            />
+            <div
+              onClick={otpfunc}
+              className="addtocartbtn">
+              Send OTP
+            </div>
+          </FormControl>
+
+
+          <FormControl variant="standard">
+            <InputLabel sx={{fontSize:"15px"}} htmlFor="input-with-icon-adornment">
+              Enter your mobile number
+            </InputLabel>
+            <Input
+              onKeyUp={(e)=>{setOTP(e.target.value)}}
+              type="Number"
+              sx={{ fontSize: "30px" }}
+              id="input-with-icon-adornment"
+              startAdornment={
+                <InputAdornment position="start">
+                  <AdminPanelSettingsIcon />
+                </InputAdornment>
+              }
+            />
+            <div
+              onClick={otpfunc}
+              className="addtocartbtn">
+              Verify OTP
+            </div>
+          </FormControl>
+          
+        </Box>
+      </Modal>
+      <div>
+        {["left", "right", "top", "bottom"].map((anchor) => (
+          <React.Fragment key={anchor}>
+            <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+            <Drawer
+              anchor={anchor}
+              open={state[anchor]}
+              onClose={toggleDrawer(anchor, false)}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <Box
-            component="img"
-            sx={{ width: "15vw", display: { xs: "flex", md: "flex" }, mr: 1 }}
+              {list(anchor)}
+            </Drawer>
+          </React.Fragment>
+        ))}
+      </div>
+
+      <AppBar
+        position="fixed"
+        sx={{ zIndex: "99", backgroundColor: "#f1e2ce" }}
+      >
+        <Toolbar>
+          <img
+            style={{ width: "150px" }}
             alt=""
             src="https://image1.jdomni.in/storeLogo/29092020/C4/3E/F9/DA80826D535A06444A27BC724F_1601398281684.png?output-format=webp"
           />
 
-          
-         
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, display: "block",color:"#E6B578" }}
+          <Search sx={{ backgroundColor: "white" }}>
+            <SearchIconWrapper>
+              <SearchIcon sx={{ color: "black" }} />
+            </SearchIconWrapper>
+            <StyledInputBase
+              sx={{ color: "black" }}
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Tooltip title="Home">
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
               >
-                {page}
-              </Button>
-            ))}
+                <Typography sx={txtstyle}>Home</Typography>
+              </IconButton>
+            </Tooltip>
+
+            <Tooltip title="Categories">
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                // onClick={handleProfileMenuOpen}
+                onClick={toggleDrawer("right", true)}
+                color="inherit"
+              >
+                <Typography sx={txtstyle}>Catrgory</Typography>
+              </IconButton>
+            </Tooltip>
+
+            <Tooltip title="About Us">
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleOpen}
+                color="inherit"
+              >
+                <Typography sx={txtstyle}>Login</Typography>
+              </IconButton>
+            </Tooltip>
+
+            <Tooltip title="Cart">
+              <IconButton
+                size="large"
+                aria-label="show 4 new mails"
+                color="inherit"
+              >
+                <Badge badgeContent={4} color="error">
+                  <ShoppingCartIcon
+                    sx={{ color: "orange", fontSize: "45px" }}
+                  />
+                </Badge>
+              </IconButton>
+            </Tooltip>
           </Box>
-
-         
-
-          
-
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </Box>
         </Toolbar>
-      </Container>
-    </AppBar>
+      </AppBar>
+      {renderMobileMenu}
+      {/* {renderMenu} */}
+    </Box>
   );
-};
-export default ResponsiveAppBar;
+}
