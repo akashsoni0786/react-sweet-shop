@@ -12,6 +12,8 @@ import CategoryProducts from "./CategoryProducts";
 import ProductDetailPage from "./ProductDetailPage";
 import Footer from "./Footer";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Cart from "./Cart";
+import Checkout from "./Checkout";
 function App() {
   const gototop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -19,12 +21,12 @@ function App() {
   return (
     <div style={{ position: "relative" }}>
       <ResponsiveAppBar />
-
-
       <Routes>
       <Route path='/' element={<Home />}/>
       <Route path='/category' element={<CategoryProducts />}/>
       <Route path='/details' element={<ProductDetailPage />}/>
+      <Route path='/Cart' element={<Cart />}/>
+      <Route path='/checkout' element={<Checkout />}/>
       </Routes>
      
      

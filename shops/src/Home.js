@@ -20,12 +20,12 @@ const Home = () => {
   const goright = () => {
     document.getElementById("sweetcarousel").scrollLeft += 220;
   };
-  const sendtocategorypage=(e)=>{
+  const sendtocategorypage = (e) => {
     contxt.setCat_Products(e.target.id);
-  }
-  const sendtocategorypage2=(e)=>{
+  };
+  const sendtocategorypage2 = (e) => {
     contxt.setCat_Products(e.target.textContent);
-  }
+  };
   return (
     <div style={{ marginTop: "20px" }}>
       <MyCarousel />
@@ -35,10 +35,10 @@ const Home = () => {
           <ArrowBackIosIcon sx={{ color: "white", marginLeft: "8px" }} />
         </div>
         <div id="sweetcarousel" className="sweetscarousel">
-        <div className="sweetcard">
+          <div className="sweetcard">
             <Link to="/category">
               <img
-              onClick={sendtocategorypage}
+                onClick={sendtocategorypage}
                 id="Modaks"
                 className="sweetpic"
                 alt=""
@@ -46,13 +46,15 @@ const Home = () => {
               />
             </Link>
             <Link to="/category">
-              <p onClick={sendtocategorypage2}  className="sweetname">Modaks</p>
+              <p onClick={sendtocategorypage2} className="sweetname">
+                Modaks
+              </p>
             </Link>
           </div>
           <div className="sweetcard">
             <Link to="/category">
               <img
-              onClick={sendtocategorypage}
+                onClick={sendtocategorypage}
                 id="Burfi"
                 className="sweetpic"
                 alt=""
@@ -60,14 +62,16 @@ const Home = () => {
               />
             </Link>
             <Link to="/category">
-              <p onClick={sendtocategorypage2} className="sweetname">Burfi</p>
+              <p onClick={sendtocategorypage2} className="sweetname">
+                Burfi
+              </p>
             </Link>
           </div>
 
           <div className="sweetcard">
             <Link to="/category">
               <img
-              onClick={sendtocategorypage}
+                onClick={sendtocategorypage}
                 id="Gulab Jamun"
                 className="sweetpic"
                 alt=""
@@ -75,14 +79,16 @@ const Home = () => {
               />
             </Link>
             <Link to="/category">
-              <p onClick={sendtocategorypage2}  className="sweetname">Gulab Jamun</p>
+              <p onClick={sendtocategorypage2} className="sweetname">
+                Gulab Jamun
+              </p>
             </Link>
           </div>
 
           <div className="sweetcard">
             <Link to="/category">
               <img
-              onClick={sendtocategorypage}
+                onClick={sendtocategorypage}
                 id="Soan Papdi"
                 className="sweetpic"
                 alt=""
@@ -90,14 +96,16 @@ const Home = () => {
               />
             </Link>
             <Link to="/category">
-              <p onClick={sendtocategorypage2}  className="sweetname">Soan Papdi</p>
+              <p onClick={sendtocategorypage2} className="sweetname">
+                Soan Papdi
+              </p>
             </Link>
           </div>
 
           <div className="sweetcard">
             <Link to="/category">
               <img
-              onClick={sendtocategorypage}
+                onClick={sendtocategorypage}
                 id="Rasgulla"
                 className="sweetpic"
                 alt=""
@@ -105,14 +113,16 @@ const Home = () => {
               />
             </Link>
             <Link to="/category">
-              <p onClick={sendtocategorypage2}  className="sweetname">Rasgulla</p>
+              <p onClick={sendtocategorypage2} className="sweetname">
+                Rasgulla
+              </p>
             </Link>
           </div>
 
           <div className="sweetcard">
             <Link to="/category">
               <img
-              onClick={sendtocategorypage}
+                onClick={sendtocategorypage}
                 id="Cham Cham"
                 className="sweetpic"
                 alt=""
@@ -120,14 +130,16 @@ const Home = () => {
               />
             </Link>
             <Link to="/category">
-              <p onClick={sendtocategorypage2}  className="sweetname">Cham Cham</p>
+              <p onClick={sendtocategorypage2} className="sweetname">
+                Cham Cham
+              </p>
             </Link>
           </div>
 
           <div className="sweetcard">
             <Link to="/category">
               <img
-              onClick={sendtocategorypage}
+                onClick={sendtocategorypage}
                 id="Rasmalai"
                 className="sweetpic"
                 alt=""
@@ -135,12 +147,13 @@ const Home = () => {
               />
             </Link>
             <Link to="/category">
-              <p onClick={sendtocategorypage2}  className="sweetname">Rasmalai</p>
+              <p onClick={sendtocategorypage2} className="sweetname">
+                Rasmalai
+              </p>
             </Link>
           </div>
 
-          
-{/* 
+          {/* 
           <div className="sweetcard">
             <Link to="/category">
               <img
@@ -166,14 +179,15 @@ const Home = () => {
         />
         <div className="aboutcontent">
           <p className="heading">• • About Us • •</p>
+
           <p className="aboutus">
             After serving so many customers, today we can proudly say that our
-            shop, Sweet Junction, situated at Vishwas Khand, Lucknow, Uttar Pradesh,
-            is home to a wide range of sweets that cater to the diverse taste
-            buds of every patron. All of our delicacies are made using unique
-            recipes that will leave a memorable aftertaste in your mouth. You
-            can call for sweets in times of sudden sweet cravings or when you
-            wish to complete a meal with a delightful dessert.
+            shop, Sweet Junction, situated at Vishwas Khand, Lucknow, Uttar
+            Pradesh, is home to a wide range of sweets that cater to the diverse
+            taste buds of every patron. All of our delicacies are made using
+            unique recipes that will leave a memorable aftertaste in your mouth.
+            You can call for sweets in times of sudden sweet cravings or when
+            you wish to complete a meal with a delightful dessert.
           </p>
         </div>
       </div>

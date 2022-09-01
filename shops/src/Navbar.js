@@ -16,6 +16,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FaceIcon from "@mui/icons-material/Face";
+import NoAccountsIcon from "@mui/icons-material/NoAccounts";
 import {
   Alert,
   FormControl,
@@ -39,10 +41,10 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import HomeIcon from "@mui/icons-material/Home";
 import CategoryIcon from "@mui/icons-material/Category";
 import { contxtname } from "./Context";
-import { useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import CallIcon from "@mui/icons-material/Call";
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 const style = {
   position: "absolute",
   top: "50%",
@@ -109,8 +111,13 @@ export default function PrimarySearchAppBar() {
   const navigate = useNavigate();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
+  const [openOTP, setOpenOTP] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleOpenOTP = () => setOpenOTP(true);
+  const handleCloseOTP = () => setOpenOTP(false);
+
   const contxt = React.useContext(contxtname);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -121,11 +128,6 @@ export default function PrimarySearchAppBar() {
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -255,14 +257,25 @@ export default function PrimarySearchAppBar() {
       </List>
       <Divider />
       <List>
-        <ListItem key="Login" disablePadding>
-          <ListItemButton onClick={handleOpen}>
-            <ListItemIcon>
-              <MailIcon />
-            </ListItemIcon>
-            <ListItemText primary="Login" />
-          </ListItemButton>
-        </ListItem>
+        {contxt.userID == "" ? (
+          <ListItem key="Login" disablePadding>
+            <ListItemButton onClick={handleOpen}>
+              <ListItemIcon>
+                <MailIcon />
+              </ListItemIcon>
+              <ListItemText primary="Login" />
+            </ListItemButton>
+          </ListItem>
+        ) : (
+          <ListItem key="Logout" disablePadding>
+            <ListItemButton onClick={logout}>
+              <ListItemIcon>
+                <MailIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </ListItem>
+        )}
         <ListItem key="About" disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -324,28 +337,53 @@ export default function PrimarySearchAppBar() {
         <p>Category</p>
       </MenuItem>
 
+      <Link to="/cart" style={{textDecoration:'none',color:"black"}}>
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
-        <p>Cart</p>
-      </MenuItem>
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            color="inherit"
+          >
+            <Badge badgeContent={contxt.cartcount} color="error">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+          <p>Cart</p>
+        </MenuItem>
+      </Link>
 
-      <MenuItem
-        onClick={() => {
-          handleOpen();
-          handleMobileMenuClose();
-        }}
-      >
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
-        <p>Login</p>
-      </MenuItem>
+      {contxt.userID == "" ? (
+        <MenuItem
+          onClick={() => {
+            handleOpen();
+            handleMobileMenuClose();
+          }}
+        >
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            color="inherit"
+          >
+            <FaceIcon />
+          </IconButton>
+          <p>Login</p>
+        </MenuItem>
+      ) : (
+        <MenuItem
+          onClick={() => {
+            logout();
+          }}
+        >
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            color="inherit"
+          >
+            <NoAccountsIcon />
+          </IconButton>
+          <p>Logout</p>
+        </MenuItem>
+      )}
     </Menu>
   );
   function TransitionDown(props) {
@@ -353,43 +391,18 @@ export default function PrimarySearchAppBar() {
   }
   const [opensnack, setOpensnack] = React.useState(false);
   const [opensnackwrong, setOpensnackwrong] = React.useState(false);
+
   const [otpsnackwrong, setOtpsnackwrong] = React.useState(false);
-  const [otpsnackright, setOtpsnackright] = React.useState(false);
+  const [otpsnackwrongOTP, setOtpsnackwrongOTP] = React.useState(false);
+  const [otpsnackrightOTP, setOtpsnackrightOTP] = React.useState(false);
+
   const [transition, setTransition] = React.useState(undefined);
   const [mobnum, setMobnum] = React.useState(0);
   const [otp, setOTP] = React.useState();
   const sendotpsnack = (Transition) => () => {
-      setOpensnack(true);
-      setTransition(() => Transition);
+    setOpensnack(true);
+    setTransition(() => Transition);
   };
-
-  const otpfunc=()=>{
-    if(mobnum.length == 10)
-    {
-      setMobnum('');
-      setOpensnack(true);
-      sendotpsnack(TransitionDown);
-    }
-    else
-    {
-      setOpensnackwrong(true);
-      wronginput(TransitionDown);
-    }
-  }
-
-  const otpverify=()=>{
-    if(otp == 1234)
-    {
-      setMobnum('');
-      setOpensnack(true);
-      sendotpsnack(TransitionDown);
-    }
-    else
-    {
-      setOpensnackwrong(true);
-      wronginput(TransitionDown);
-    }
-  }
 
   const handleClosesnack = () => {
     setOpensnack(false);
@@ -398,26 +411,78 @@ export default function PrimarySearchAppBar() {
     setOpensnackwrong(false);
   };
   const handleClosesnackwrongOTP = () => {
-    setOtpsnackwrong(false);
+    setOtpsnackwrongOTP(false);
+  };
+
+  const handleClosesnackrightOTP = () => {
+    setOtpsnackrightOTP(false);
   };
 
   const wronginput = (Transition) => () => {
-      setTransition(() => Transition);
-      setOpensnackwrong(true);
+    setTransition(() => Transition);
+    setOpensnackwrong(true);
   };
   const wronginputOTP = (Transition) => () => {
     setTransition(() => Transition);
     setOpensnackwrong(true);
-};
+  };
+
+  const otpfunc = () => {
+    if (mobnum.length == 10) {
+      document.getElementById("sendotpbtn").style.display = false;
+      setOpensnack(true);
+      sendotpsnack(TransitionDown);
+      handleClose();
+      handleOpenOTP();
+    } else {
+      setOpensnackwrong(true);
+      wronginput(TransitionDown);
+    }
+  };
+
+  const otpverify = () => {
+    if (otp == 1234) {
+      setOtpsnackrightOTP(true);
+      sendotpsnack(TransitionDown);
+      handleCloseOTP();
+      contxt.setUserID(mobnum);
+    } else {
+      setOtpsnackwrongOTP(true);
+      wronginputOTP(TransitionDown);
+    }
+  };
+  const logout = () => {
+    contxt.setUserID("");
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
-
-      <Snackbar open={opensnackwrong} autoHideDuration={6000} onClose={handleClosesnackwrongOTP}>
-        <Alert onClose={handleClosesnackwrongOTP} severity="error" sx={{ width: '100%' }}>
-        Please enter valid OTP!
+      <Snackbar
+        open={otpsnackwrongOTP}
+        autoHideDuration={6000}
+        onClose={handleClosesnackwrongOTP}
+      >
+        <Alert
+          onClose={handleClosesnackwrongOTP}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Please enter valid OTP!
         </Alert>
       </Snackbar>
 
+      <Snackbar
+        open={otpsnackrightOTP}
+        autoHideDuration={6000}
+        onClose={handleClosesnackrightOTP}
+      >
+        <Alert
+          onClose={handleClosesnackrightOTP}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          OTP Verified successfully!
+        </Alert>
+      </Snackbar>
       <Snackbar
         open={opensnack}
         onClose={handleClosesnack}
@@ -426,12 +491,19 @@ export default function PrimarySearchAppBar() {
         key={transition ? transition.name : ""}
       />
 
-      <Snackbar open={opensnackwrong} autoHideDuration={6000} onClose={handleClosesnackwrong}>
-        <Alert onClose={handleClosesnackwrong} severity="error" sx={{ width: '100%' }}>
-        Please enter valid mobile number of 10 digits!
+      <Snackbar
+        open={opensnackwrong}
+        autoHideDuration={6000}
+        onClose={handleClosesnackwrong}
+      >
+        <Alert
+          onClose={handleClosesnackwrong}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Please enter valid mobile number of 10 digits!
         </Alert>
       </Snackbar>
-
 
       <Modal
         keepMounted
@@ -444,12 +516,18 @@ export default function PrimarySearchAppBar() {
           <Typography sx={{ fontSize: "40px", fontWeight: "bold" }}>
             Register yourself
           </Typography>
-          <FormControl variant="standard" sx={{display:"none"}}>
-            <InputLabel sx={{fontSize:"15px"}} htmlFor="input-with-icon-adornment">
+
+          <FormControl variant="standard">
+            <InputLabel
+              sx={{ fontSize: "15px" }}
+              htmlFor="input-with-icon-adornment"
+            >
               Enter your mobile number
             </InputLabel>
             <Input
-              onKeyUp={(e)=>{setMobnum(e.target.value)}}
+              onKeyUp={(e) => {
+                setMobnum(e.target.value);
+              }}
               type="Number"
               sx={{ fontSize: "30px" }}
               id="input-with-icon-adornment"
@@ -459,20 +537,36 @@ export default function PrimarySearchAppBar() {
                 </InputAdornment>
               }
             />
-            <div
-              onClick={otpfunc}
-              className="addtocartbtn">
+            <div id="sendotpbtn" onClick={otpfunc} className="addtocartbtn">
               Send OTP
             </div>
           </FormControl>
+        </Box>
+      </Modal>
 
+      <Modal
+        keepMounted
+        open={openOTP}
+        onClose={handleCloseOTP}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <Box sx={style}>
+          <Typography sx={{ fontSize: "40px", fontWeight: "bold" }}>
+            OTP Verification
+          </Typography>
 
           <FormControl variant="standard">
-            <InputLabel sx={{fontSize:"15px"}} htmlFor="input-with-icon-adornment">
-              Enter your mobile number
+            <InputLabel
+              sx={{ fontSize: "15px" }}
+              htmlFor="input-with-icon-adornment"
+            >
+              Enter OTP
             </InputLabel>
             <Input
-              onKeyUp={(e)=>{setOTP(e.target.value)}}
+              onKeyUp={(e) => {
+                setOTP(e.target.value);
+              }}
               type="Number"
               sx={{ fontSize: "30px" }}
               id="input-with-icon-adornment"
@@ -482,15 +576,13 @@ export default function PrimarySearchAppBar() {
                 </InputAdornment>
               }
             />
-            <div
-              onClick={otpfunc}
-              className="addtocartbtn">
+            <div onClick={otpverify} className="addtocartbtn">
               Verify OTP
             </div>
           </FormControl>
-          
         </Box>
       </Modal>
+
       <div>
         {["left", "right", "top", "bottom"].map((anchor) => (
           <React.Fragment key={anchor}>
@@ -530,6 +622,7 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Tooltip title="Home">
+              
               <IconButton
                 size="large"
                 edge="end"
@@ -538,9 +631,10 @@ export default function PrimarySearchAppBar() {
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
                 color="inherit"
-              >
-                <Typography sx={txtstyle}>Home</Typography>
+              ><NavLink to="/" style={{textDecoration:"none"}}>
+                <Typography sx={txtstyle}>Home</Typography> </NavLink>
               </IconButton>
+             
             </Tooltip>
 
             <Tooltip title="Categories">
@@ -557,34 +651,55 @@ export default function PrimarySearchAppBar() {
                 <Typography sx={txtstyle}>Catrgory</Typography>
               </IconButton>
             </Tooltip>
+            {contxt.userID === "" ? (
+              <Tooltip title="Login">
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleOpen}
+                  color="inherit"
+                >
+                  <Typography sx={txtstyle}>Login</Typography>
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Logout">
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={logout}
+                  color="inherit"
+                >
+                  <Typography sx={txtstyle}>Logout</Typography>
+                </IconButton>
+              </Tooltip>
+            )}
 
-            <Tooltip title="About Us">
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleOpen}
-                color="inherit"
-              >
-                <Typography sx={txtstyle}>Login</Typography>
-              </IconButton>
-            </Tooltip>
-
-            <Tooltip title="Cart">
-              <IconButton
-                size="large"
-                aria-label="show 4 new mails"
-                color="inherit"
-              >
-                <Badge badgeContent={4} color="error">
-                  <ShoppingCartIcon
-                    sx={{ color: "orange", fontSize: "45px" }}
-                  />
-                </Badge>
-              </IconButton>
-            </Tooltip>
+            {contxt.cartcount == 0 ? (
+              <></>
+            ) : (
+              <Tooltip title="Cart">
+                <Link to='/cart'>
+                <IconButton
+                  size="large"
+                  aria-label="show 4 new mails"
+                  color="inherit"
+                >
+                  <Badge badgeContent={contxt.cartcount} color="error">
+                    <ShoppingCartIcon
+                      sx={{ color: "orange", fontSize: "45px" }}
+                    />
+                  </Badge>
+                </IconButton>
+                </Link>
+              </Tooltip>
+            )}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
