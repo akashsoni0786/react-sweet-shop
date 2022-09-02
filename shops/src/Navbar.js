@@ -311,7 +311,7 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      <MenuItem onClick={()=>{navigate('/');handleMobileMenuClose();}}>
         <Tooltip title="Cart">
           <IconButton
             size="large"
@@ -337,13 +337,9 @@ export default function PrimarySearchAppBar() {
         <p>Category</p>
       </MenuItem>
 
-      <Link to="/cart" style={{textDecoration:'none',color:"black"}}>
-      <MenuItem onClick={handleProfileMenuOpen}>
-          <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
-          >
+      <Link to="/cart" style={{ textDecoration: "none", color: "black" }}>
+        <MenuItem onClick={handleProfileMenuOpen}>
+          <IconButton size="large" aria-label="show" color="inherit">
             <Badge badgeContent={contxt.cartcount} color="error">
               <ShoppingCartIcon />
             </Badge>
@@ -351,6 +347,24 @@ export default function PrimarySearchAppBar() {
           <p>Cart</p>
         </MenuItem>
       </Link>
+      {contxt.userID == "" ? (
+        <></>
+      ) : (
+        <MenuItem
+          onClick={() => {
+            navigate("/orders");handleMobileMenuClose();
+          }}
+        >
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            color="inherit"
+          >
+            <FaceIcon />
+          </IconButton>
+          <p>Orders</p>
+        </MenuItem>
+      )}
 
       {contxt.userID == "" ? (
         <MenuItem
@@ -372,6 +386,7 @@ export default function PrimarySearchAppBar() {
         <MenuItem
           onClick={() => {
             logout();
+            handleMobileMenuClose();
           }}
         >
           <IconButton
@@ -604,6 +619,7 @@ export default function PrimarySearchAppBar() {
       >
         <Toolbar>
           <img
+          onClick={navigate('/')}
             style={{ width: "150px" }}
             alt=""
             src="https://image1.jdomni.in/storeLogo/29092020/C4/3E/F9/DA80826D535A06444A27BC724F_1601398281684.png?output-format=webp"
@@ -622,7 +638,6 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Tooltip title="Home">
-              
               <IconButton
                 size="large"
                 edge="end"
@@ -631,10 +646,11 @@ export default function PrimarySearchAppBar() {
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
                 color="inherit"
-              ><NavLink to="/" style={{textDecoration:"none"}}>
-                <Typography sx={txtstyle}>Home</Typography> </NavLink>
+              >
+                <NavLink to="/" style={{ textDecoration: "none" }}>
+                  <Typography sx={txtstyle}>Home</Typography>{" "}
+                </NavLink>
               </IconButton>
-             
             </Tooltip>
 
             <Tooltip title="Categories">
@@ -651,6 +667,28 @@ export default function PrimarySearchAppBar() {
                 <Typography sx={txtstyle}>Catrgory</Typography>
               </IconButton>
             </Tooltip>
+            {contxt.userID === "" ? (
+              <></>
+            ) : (
+              <>
+                <Tooltip title="Orders">
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={() => {
+                      navigate("/orders");
+                    }}
+                    color="inherit"
+                  >
+                    <Typography sx={txtstyle}>Orders</Typography>
+                  </IconButton>
+                </Tooltip>
+              </>
+            )}
+
             {contxt.userID === "" ? (
               <Tooltip title="Login">
                 <IconButton
@@ -685,18 +723,18 @@ export default function PrimarySearchAppBar() {
               <></>
             ) : (
               <Tooltip title="Cart">
-                <Link to='/cart'>
-                <IconButton
-                  size="large"
-                  aria-label="show 4 new mails"
-                  color="inherit"
-                >
-                  <Badge badgeContent={contxt.cartcount} color="error">
-                    <ShoppingCartIcon
-                      sx={{ color: "orange", fontSize: "45px" }}
-                    />
-                  </Badge>
-                </IconButton>
+                <Link to="/cart">
+                  <IconButton
+                    size="large"
+                    aria-label="show 4 new mails"
+                    color="inherit"
+                  >
+                    <Badge badgeContent={contxt.cartcount} color="error">
+                      <ShoppingCartIcon
+                        sx={{ color: "orange", fontSize: "45px" }}
+                      />
+                    </Badge>
+                  </IconButton>
                 </Link>
               </Tooltip>
             )}

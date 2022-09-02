@@ -14,6 +14,7 @@ import Footer from "./Footer";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
+import Orders from "./Orders";
 function App() {
   const gototop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -27,6 +28,7 @@ function App() {
       <Route path='/details' element={<ProductDetailPage />}/>
       <Route path='/Cart' element={<Cart />}/>
       <Route path='/checkout' element={<Checkout />}/>
+      <Route path='/orders' element={<Orders />}/>
       </Routes>
      
      

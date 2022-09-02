@@ -276,7 +276,6 @@ export default function Cart() {
                   </TableCell>
                 </TableRow>
               </TableHead>
-              {console.log(contxt.addtocartstate)}
               {contxt.addtocartstate.map((i) => {
                 return (
                   <TableBody>

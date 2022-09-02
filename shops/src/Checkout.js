@@ -29,10 +29,11 @@ const Checkout = () => {
     } else {
       let items = {
         id:uid,
-        // date:Date().getDate(),
+        date:new Date().getDate()+"/"+new Date().getMonth()+"/"+new Date().getYear(),
         userid: contxt.userID,
         ordersofuser: [...[contxt.addtocartstate]],
         name: name,
+        total:ttl,
         address: home_no + ", " + city + ", " + state + ", " + pin,
         mob_number: mob_no,
       };
