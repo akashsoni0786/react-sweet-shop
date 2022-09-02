@@ -7,7 +7,7 @@ import CallIcon from "@mui/icons-material/Call";
 import Popover from "@mui/material/Popover";
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import { Badge, Button, IconButton, Tooltip, Typography } from "@mui/material";
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 import CategoryProducts from "./CategoryProducts";
 import ProductDetailPage from "./ProductDetailPage";
 import Footer from "./Footer";
@@ -15,6 +15,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
 import Orders from "./Orders";
+import SearchPage from "./Search";
 function App() {
   const gototop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -23,16 +24,14 @@ function App() {
     <div style={{ position: "relative" }}>
       <ResponsiveAppBar />
       <Routes>
-      <Route path='/' element={<Home />}/>
-      <Route path='/category' element={<CategoryProducts />}/>
-      <Route path='/details' element={<ProductDetailPage />}/>
-      <Route path='/Cart' element={<Cart />}/>
-      <Route path='/checkout' element={<Checkout />}/>
-      <Route path='/orders' element={<Orders />}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/category" element={<CategoryProducts />} />
+        <Route path="/details" element={<ProductDetailPage />} />
+        <Route path="/Cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/search" element={<SearchPage />} />
       </Routes>
-     
-     
-
 
       <div onClick={gototop} className="frontbtns">
         <ArrowCircleUpIcon
@@ -79,7 +78,6 @@ function App() {
           </div>
         )}
       </PopupState>
-
     </div>
   );
 }

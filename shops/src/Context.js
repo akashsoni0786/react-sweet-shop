@@ -10,6 +10,7 @@ export const Context = (props) => {
   const [cartcount, setCartCount] = useState(0);
   const [userID, setUserID] = useState('');
   const [addtocartstate, setAddtocartstate] = useState([]);
+  const [searchtxtar,setSearchtxtar] = React.useState([]);
   React.useEffect(()=>{
     const ax = async ()=>
     {
@@ -50,7 +51,9 @@ export const Context = (props) => {
         addtocartstate:addtocartstate, 
         setAddtocartstate:setAddtocartstate,
         cartcount:cartcount, 
-        setCartCount:setCartCount
+        setCartCount:setCartCount,
+        searchtxtar:searchtxtar,
+        setSearchtxtar:setSearchtxtar
       }}
     >
       {props.children}

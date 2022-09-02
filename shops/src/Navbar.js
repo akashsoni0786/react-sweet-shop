@@ -56,8 +56,6 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
-  // display:"flex",
-  // justifyContent:"center"
 };
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -96,7 +94,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -311,18 +308,39 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={()=>{navigate('/');handleMobileMenuClose();}}>
-        <Tooltip title="Cart">
-          <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
-          >
-            <HomeIcon />
-          </IconButton>
-        </Tooltip>
-        <p>Home</p>
-      </MenuItem>
+      <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+        <MenuItem onClick={handleMobileMenuClose}>
+          <Tooltip title="Cart">
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+            >
+              <HomeIcon />
+            </IconButton>
+          </Tooltip>
+          <p>Home</p>
+        </MenuItem>
+      </Link>
+
+      {contxt.userID == "" ? (
+        <></>
+      ) : (
+        <Link to="/orders" style={{ textDecoration: "none", color: "black" }}>
+          <MenuItem onClick={handleMobileMenuClose}>
+            <Tooltip title="Cart">
+              <IconButton
+                size="large"
+                aria-label="show 4 new mails"
+                color="inherit"
+              >
+                <FaceIcon />
+              </IconButton>
+            </Tooltip>
+            <p>Orders</p>
+          </MenuItem>
+        </Link>
+      )}
 
       <MenuItem onClick={toggleDrawer("right", true)}>
         <Tooltip title="Cart">
@@ -339,7 +357,11 @@ export default function PrimarySearchAppBar() {
 
       <Link to="/cart" style={{ textDecoration: "none", color: "black" }}>
         <MenuItem onClick={handleProfileMenuOpen}>
-          <IconButton size="large" aria-label="show" color="inherit">
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            color="inherit"
+          >
             <Badge badgeContent={contxt.cartcount} color="error">
               <ShoppingCartIcon />
             </Badge>
@@ -347,24 +369,6 @@ export default function PrimarySearchAppBar() {
           <p>Cart</p>
         </MenuItem>
       </Link>
-      {contxt.userID == "" ? (
-        <></>
-      ) : (
-        <MenuItem
-          onClick={() => {
-            navigate("/orders");handleMobileMenuClose();
-          }}
-        >
-          <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
-          >
-            <FaceIcon />
-          </IconButton>
-          <p>Orders</p>
-        </MenuItem>
-      )}
 
       {contxt.userID == "" ? (
         <MenuItem
@@ -386,7 +390,6 @@ export default function PrimarySearchAppBar() {
         <MenuItem
           onClick={() => {
             logout();
-            handleMobileMenuClose();
           }}
         >
           <IconButton
@@ -469,6 +472,20 @@ export default function PrimarySearchAppBar() {
   const logout = () => {
     contxt.setUserID("");
   };
+  
+  var search_val = [];
+  const search_products = (e) => {
+    navigate("/search");
+    var searchtext = e.target.value;
+    contxt.products.map((i) => {
+      if (i.pname.toLowerCase().includes(searchtext))
+       {
+        search_val = [...search_val, i];
+        contxt.setSearchtxtar(search_val);
+      }
+    });
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Snackbar
@@ -619,8 +636,8 @@ export default function PrimarySearchAppBar() {
       >
         <Toolbar>
           <img
-          onClick={navigate('/')}
-            style={{ width: "150px" }}
+          onClick={()=>{navigate("/")}}
+            style={{ width: "150px",cursor:"pointer" }}
             alt=""
             src="https://image1.jdomni.in/storeLogo/29092020/C4/3E/F9/DA80826D535A06444A27BC724F_1601398281684.png?output-format=webp"
           />
@@ -633,6 +650,7 @@ export default function PrimarySearchAppBar() {
               sx={{ color: "black" }}
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              onKeyUp={search_products}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
@@ -671,7 +689,7 @@ export default function PrimarySearchAppBar() {
               <></>
             ) : (
               <>
-                <Tooltip title="Orders">
+                <Tooltip title="Logout">
                   <IconButton
                     size="large"
                     edge="end"

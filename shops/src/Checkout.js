@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import { contxtname } from "./Context";
 import apicall from "./db.js";
 import { v4 as uid } from "uuid";
+import { useNavigate } from "react-router-dom";
 const Checkout = () => {
   const contxt = React.useContext(contxtname);
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [mob_no, setMob_no] = useState("");
   const [home_no, setHome_no] = useState("");
@@ -12,35 +14,40 @@ const Checkout = () => {
   const [state, setState] = useState("");
   const [pin, setPin] = useState("");
   const [ttl, setTtl] = useState("");
- 
-  React.useEffect(()=>{
+
+  React.useEffect(() => {
     let total = 0;
-    contxt.addtocartstate.map(i=>{
-    let q = Number(i.quantity);
-    let p = Number(i.price);
-      total = total + q*p;
-    })
-    setTtl(total)
-  },contxt.cartcount);
+    contxt.addtocartstate.map((i) => {
+      let q = Number(i.quantity);
+      let p = Number(i.price);
+      total = total + q * p;
+    });
+    setTtl(total);
+  }, contxt.cartcount);
 
   const placeorder = async () => {
     if (name == "" || home_no == "" || city == "" || state == "" || pin == "") {
       alert("All field are mendotary");
     } else {
       let items = {
-        id:uid,
-        date:new Date().getDate()+"/"+new Date().getMonth()+"/"+new Date().getYear(),
+        id: uid,
+        date:
+          new Date().getDate() +
+          "/" +
+          new Date().getMonth() +
+          "/" +
+          new Date().getYear(),
         userid: contxt.userID,
-        ordersofuser: [...[contxt.addtocartstate]],
+        orderitems: contxt.addtocartstate,
         name: name,
-        total:ttl,
+        total: ttl,
         address: home_no + ", " + city + ", " + state + ", " + pin,
         mob_number: mob_no,
       };
 
       try {
-        await apicall.post('/orders/', items);
-        contxt.addtocartstate.map( async(i)=>{
+        await apicall.post("/orders/", items);
+        contxt.addtocartstate.map(async (i) => {
           try {
             await apicall.delete(`/addtocart/${i.id}`);
             contxt.setAddtocartstate([]);
@@ -48,15 +55,15 @@ const Checkout = () => {
           } catch (er) {
             console.log(er);
           }
-        })
-        
-        
+        });
+        let allorders = await apicall.get(`/orders`);
+        contxt.setOrders(allorders.data);
+        navigate("/orders");
       } catch (e) {
         console.log(e);
       }
-      setTtl(0)
+      setTtl(0);
     }
-    
   };
   return (
     <>
