@@ -7,86 +7,139 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { contxtname } from "./Context";
-import apicall from './db.js';
+import apicall from "./db.js";
 import Row from "./Row";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Slide,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 export default function Orders() {
   const contxt = React.useContext(contxtname);
   const [available, setAvailable] = React.useState("no");
+  const [open, setOpen] = React.useState(false);
+  const [ids, setId] = React.useState("");
+  const navigate = useNavigate();
   
   React.useEffect(() => {
-    const avail = async()=>{
-        let allorders = await apicall.get(`/orders`);
-        contxt.setOrders(allorders.data);
-        contxt.orders.map(i=>{
-          if(i.userid == contxt.userID){
-            setAvailable("yes");
-          }
-        })
-    }
+    const avail = async () => {
+      let allorders = await apicall.get(`/orders`);
+      contxt.setOrders(allorders.data);
+      contxt.orders.map((i) => {
+        if (i.userid == contxt.userID) {
+          setAvailable("yes");
+        }
+      });
+    };
     avail();
   }, []);
 
+  const handleClickOpen = (id) => {
+    setOpen(true);
+    setId(id);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const cancelorder = async () => {
+    try {
+      await apicall.delete(`/orders/${ids}`);
+      let cancelorder = await apicall.get("/orders");
+      await contxt.setOrders(cancelorder.data);
+      setOpen(false);
+      let left = cancelorder.data.filter((i) => contxt.userID == i.userid);
+      if (left.length === 0) {
+        setAvailable("no");
+      }
+    } catch (er) {
+      console.log(er);
+    }
+  };
   return (
     <>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Do you really want to cancel order?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            If yes, this order cannot be retrieve further!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>No</Button>
+          <Button onClick={cancelorder}>Yes</Button>
+        </DialogActions>
+      </Dialog>
       {available == "yes" ? (
-        <>
-          {" "}
-          <h1 sx={{ margin: "1300px 10px" }}>Orders</h1>
-          <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
-              <TableHead>
-                <TableRow>
-                  <TableCell />
-                  <TableCell>Order ID</TableCell>
-                  <TableCell align="left">Customer</TableCell>
-                  <TableCell align="left">Address</TableCell>
-                  <TableCell align="right">Date</TableCell>
-                  <TableCell align="right">Total</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-               
-                {contxt.orders.map((i) => {
-                  if (i.userid == contxt.userID) {
-                    return (
-                      <Row
-                        oid={i.id}
-                        uname={i.name}
-                        date={i.date}
-                        total={i.total}
-                        address={i.address}
-                        orderitemsarr={i.orderitems}
-                      
-                      />
-                    );
-                  }
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </>
-      ) 
-      :
-      (
-        <>
-          <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-            marginTop: "100px",
-          }}
-        >
-          <h1>No Order </h1>
-          <img alt="" style={{ width: "40%" }} src="empty.png" />
+        <div className="same">
+          <div sx={{ margin: "130px 10px" }}>
+            <h1>My Orders</h1>
+            <TableContainer component={Paper}>
+              <Table aria-label="collapsible table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell />
+                    <TableCell>Order ID</TableCell>
+                    <TableCell align="left">Customer</TableCell>
+                    <TableCell align="left">Address</TableCell>
+                    <TableCell align="right">Cancel Order</TableCell>
+                    <TableCell align="right">Date</TableCell>
+                    <TableCell align="right">Total</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {contxt.orders.map((i) => {
+                    if (i.userid == contxt.userID) {
+                      return (
+                        <Row
+                          oid={i.id}
+                          uname={i.name}
+                          cancel={() => {
+                            handleClickOpen(i.id);
+                          }}
+                          date={i.date}
+                          total={i.total}
+                          address={i.address}
+                          orderitemsarr={i.orderitems}
+                        />
+                      );
+                    }
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
         </div>
-        </>
+      ) : (
+        <div className="same">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+              marginTop: "100px",
+            }}
+          >
+            <h1>No Order </h1>
+            <img alt="" style={{ width: "40%" }} src="empty.png" />
+          </div>
+        </div>
       )}
     </>
   );
 }
-
-
-
-

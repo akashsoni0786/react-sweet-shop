@@ -6,37 +6,63 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { contxtname } from "./Context";
-import { Button, IconButton, Snackbar, TableBody } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Snackbar,
+  TableBody,
+  Typography,
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import apicall from "./db.js";
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import CloseIcon from '@mui/icons-material/Close';
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
+import Popover from "@mui/material/Popover";
+import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const sty = { fontSize: "20px", fontWeight: "900" };
+
 export default function Cart() {
   const contxt = React.useContext(contxtname);
   const navigate = useNavigate();
-  const checkout =()=>{
-    if(contxt.userID == '')
-    {
+  const [opndel, setOpndel] = React.useState(false);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClickconfirm = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseconfirm = () => {
+    setAnchorEl(null);
+  };
+
+  const open1 = Boolean(anchorEl);
+  const id = open1 ? "simple-popover" : undefined;
+
+  const cancel = () => {
+    setAnchorEl(null);
+  };
+  const checkout = () => {
+    if (contxt.userID == "") {
       handleClickOpengoforlogin();
+    } else {
+      navigate("/checkout");
     }
-    else
-    {
-      navigate("/checkout")
-    }
-  }
+  };
   const lessit = (e) => {
     contxt.addtocartstate.map(async (j) => {
       if (e == j.id) {
@@ -91,12 +117,13 @@ export default function Cart() {
       let addtocart = await apicall.get("/addtocart");
       contxt.setAddtocartstate(addtocart.data);
       contxt.setCartCount(addtocart.data.length);
+      handleCloseconfirm();
     } catch (er) {
       console.log(er);
     }
   };
-  const emptycart =  () => {
-    contxt.addtocartstate.map( async(i)=>{
+  const emptycart = () => {
+    contxt.addtocartstate.map(async (i) => {
       try {
         await apicall.delete(`/addtocart/${i.id}`);
         contxt.setAddtocartstate([]);
@@ -104,7 +131,7 @@ export default function Cart() {
       } catch (er) {
         console.log(er);
       }
-    })
+    });
     handleClose();
   };
 
@@ -137,7 +164,6 @@ export default function Cart() {
 
   const action = (
     <React.Fragment>
-      
       <IconButton
         size="small"
         aria-label="close"
@@ -166,8 +192,7 @@ export default function Cart() {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{"First you have to log in yourself!"}</DialogTitle>
-        <DialogContent>
-        </DialogContent>
+        <DialogContent></DialogContent>
         <DialogActions>
           <Button onClick={handleClosegoforlogin}>Ok</Button>
         </DialogActions>
@@ -181,8 +206,7 @@ export default function Cart() {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{"Are you really want to empty cart?"}</DialogTitle>
-        <DialogContent>
-        </DialogContent>
+        <DialogContent></DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>NO</Button>
           <Button onClick={emptycart}>YES</Button>
@@ -223,14 +247,24 @@ export default function Cart() {
               flexWrap: "wrap",
             }}
           >
-            <Button variant="outlined" sx={{fontSIze:"30px"}} 
-            onClick={handleClickOpen} color="error" startIcon={<DeleteIcon sx={{fontSIze:"30px"}}/>}>
+            <Button
+              variant="outlined"
+              sx={{ fontSIze: "30px" }}
+              onClick={handleClickOpen}
+              color="error"
+              startIcon={<DeleteIcon sx={{ fontSIze: "30px" }} />}
+            >
               Empty Cart
-            </Button> &nbsp;
-            <Button onClick={checkout} variant="outlined" color="success" startIcon={<ShoppingCartCheckoutIcon />}>
+            </Button>{" "}
+            &nbsp;
+            <Button
+              onClick={checkout}
+              variant="outlined"
+              color="success"
+              startIcon={<ShoppingCartCheckoutIcon />}
+            >
               Proceed to Checkout
             </Button>
-
           </div>
 
           <TableContainer component={Paper} sx={{ marginBottom: "70px" }}>
@@ -262,10 +296,7 @@ export default function Cart() {
                   >
                     Price
                   </TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{ fontSize: "20px", fontWeight: "900" }}
-                  >
+                  <TableCell align="center" sx={sty}>
                     Total Price
                   </TableCell>
                   <TableCell
@@ -363,20 +394,47 @@ export default function Cart() {
                         align="right"
                         sx={{ fontSize: "18px", fontWeight: "300" }}
                       >
-                        <IconButton
-                          onClick={() => {
-                            deletefromcart(i.id);
-                          }}
-                          sx={{ marginRight: "20px" }}
-                        >
-                          <DeleteIcon
-                            sx={{
-                              color: "red",
-                              fontSize: "40px",
-                              cursor: "pointer",
+                        <div>
+                          <IconButton
+                            onClick={handleClickconfirm}
+                            sx={{ marginRight: "20px" }}
+                          >
+                            <DeleteIcon
+                              sx={{
+                                color: "red",
+                                fontSize: "40px",
+                                cursor: "pointer",
+                              }}
+                            />
+                          </IconButton>
+                          <Popover
+                            id={id}
+                            open={open1}
+                            anchorEl={anchorEl}
+                            onClose={handleCloseconfirm}
+                            anchorOrigin={{
+                              vertical: "bottom",
+                              horizontal: "left",
                             }}
-                          />
-                        </IconButton>
+                          >
+                            <div style={{ display: "flex" }}>
+                              <Button
+                                variant="text"
+                                onClick={handleCloseconfirm}
+                              >
+                                Cancel
+                              </Button>
+                              <Button
+                                onClick={() => {
+                                  deletefromcart(i.id);
+                                }}
+                                variant="text"
+                              >
+                                Delete
+                              </Button>
+                            </div>
+                          </Popover>
+                        </div>
                       </TableCell>
                     </TableRow>
                   </TableBody>

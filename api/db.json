@@ -1,42 +1,6 @@
 {
-  "addtocart": [
-    {
-      "id": 2,
-      "pcategory": "Modaks",
-      "pname": "Assorted Modak Box 10 Pcs",
-      "quantity": 1,
-      "price": 875,
-      "img": "https://www.madhurimasweets.com/wp-content/uploads/2022/08/ASS10-300x300.jpg"
-    }
-  ],
+  "addtocart": [],
   "orders": [
-    {
-      "date": "2/8/2022",
-      "total": 0,
-      "userid": "1122334455",
-      "orderitems": [
-        {
-          "id": 50,
-          "pcategory": "Gulab Jamun",
-          "pname": "Gulab Jamun 10 pcs",
-          "quantity": 1,
-          "price": 575,
-          "img": "https://i0.wp.com/www.ramasrey.com/wp-content/uploads/2018/08/gulab-jamun.png?w=232&ssl=1"
-        },
-        {
-          "id": 36,
-          "pcategory": "Soan Papdi",
-          "pname": "Bateesa Slice",
-          "quantity": 1,
-          "price": 1450,
-          "img": "https://www.madhurimasweets.com/wp-content/uploads/2018/08/Batisa-Slice-300x300.jpg"
-        }
-      ],
-      "name": "Akash",
-      "address": "gfd, gdfg, gdfg, df",
-      "mob_number": "sd",
-      "id": "_igCMke"
-    },
     {
       "date": "2/8/122",
       "userid": "1122334545",
@@ -65,182 +29,23 @@
       "id": "u1vc3p6"
     },
     {
-      "date": "2/8/122",
-      "userid": "1122334545",
+      "date": "5/8/122",
+      "userid": "1122334455",
       "orderitems": [
         {
-          "id": 20,
-          "pcategory": "Rasgulla",
-          "pname": "Rasgulla 5 pcs",
+          "id": 50,
+          "pcategory": "Gulab Jamun",
+          "pname": "Gulab Jamun 10 pcs",
           "quantity": 1,
-          "price": 265,
-          "img": "https://i0.wp.com/www.ramasrey.com/wp-content/uploads/2018/08/Rasgulla.jpg?resize=300%2C300&ssl=1"
+          "price": 575,
+          "img": "https://i0.wp.com/www.ramasrey.com/wp-content/uploads/2018/08/gulab-jamun.png?w=232&ssl=1"
         }
       ],
-      "name": "qwe",
-      "total": 265,
-      "address": "qwe, qwe, qweq, qew",
-      "mob_number": "qwe",
-      "id": "yV7gr2F"
-    },
-    {
-      "date": "2/8/122",
-      "userid": "9999999999",
-      "orderitems": [
-        {
-          "id": 20,
-          "pcategory": "Rasgulla",
-          "pname": "Rasgulla 5 pcs",
-          "quantity": 1,
-          "price": 265,
-          "img": "https://i0.wp.com/www.ramasrey.com/wp-content/uploads/2018/08/Rasgulla.jpg?resize=300%2C300&ssl=1"
-        },
-        {
-          "id": 18,
-          "pcategory": "Rasgulla",
-          "pname": "Rajbhog 5 pcs",
-          "quantity": 1,
-          "price": 345,
-          "img": "https://i0.wp.com/www.ramasrey.com/wp-content/uploads/2018/08/rajbhog.jpg?resize=300%2C300&ssl=1"
-        }
-      ],
-      "name": "9",
-      "total": 610,
-      "address": "9, 9, 9, 9",
-      "mob_number": "9",
-      "id": "BWyCtsz"
-    },
-    {
-      "date": "2/8/122",
-      "userid": "8888888888",
-      "orderitems": [
-        {
-          "id": 15,
-          "pcategory": "Cham Cham",
-          "pname": "Mugdal",
-          "quantity": 1,
-          "price": 1335,
-          "img": "https://www.madhurimasweets.com/wp-content/uploads/2020/08/Magdal-300x300.jpg"
-        }
-      ],
-      "name": "8",
-      "total": 1335,
-      "address": "8, 8, 8, 8",
-      "mob_number": "8",
-      "id": "R_jIBys"
-    },
-    {
-      "date": "2/8/122",
-      "userid": "9125316423",
-      "orderitems": [
-        {
-          "id": 1,
-          "pcategory": "Modaks",
-          "pname": "Maha Modak Box",
-          "quantity": 1,
-          "price": 591,
-          "img": "https://www.madhurimasweets.com/wp-content/uploads/2022/08/5-300x300.jpg"
-        },
-        {
-          "id": 2,
-          "pcategory": "Modaks",
-          "pname": "Assorted Modak Box 10 Pcs",
-          "quantity": 1,
-          "price": 875,
-          "img": "https://www.madhurimasweets.com/wp-content/uploads/2022/08/ASS10-300x300.jpg"
-        },
-        {
-          "id": 3,
-          "pcategory": "Modaks",
-          "pname": "Exotic Modak Box 10 Pcs",
-          "quantity": 1,
-          "price": 875,
-          "img": "https://www.madhurimasweets.com/wp-content/uploads/2022/08/9-300x300.jpg"
-        }
-      ],
-      "name": "12121",
-      "total": 2341,
-      "address": "121, 212, 12121, 21",
-      "mob_number": "21212",
-      "id": "pVIrzAg"
-    },
-    {
-      "date": "2/8/122",
-      "userid": "9125316423",
-      "orderitems": [
-        {
-          "id": 28,
-          "pcategory": "Rasgulla",
-          "pname": "Rasgulla 5 pcs",
-          "quantity": 1,
-          "price": 265,
-          "img": "https://i0.wp.com/www.ramasrey.com/wp-content/uploads/2018/08/Rasgulla.jpg?resize=300%2C300&ssl=1"
-        },
-        {
-          "id": 20,
-          "pcategory": "Rasgulla",
-          "pname": "Rasgulla 5 pcs",
-          "quantity": 1,
-          "price": 265,
-          "img": "https://i0.wp.com/www.ramasrey.com/wp-content/uploads/2018/08/Rasgulla.jpg?resize=300%2C300&ssl=1"
-        },
-        {
-          "id": 18,
-          "pcategory": "Rasgulla",
-          "pname": "Rajbhog 5 pcs",
-          "quantity": 1,
-          "price": 345,
-          "img": "https://i0.wp.com/www.ramasrey.com/wp-content/uploads/2018/08/rajbhog.jpg?resize=300%2C300&ssl=1"
-        },
-        {
-          "id": 30,
-          "pcategory": "Rasgulla",
-          "pname": "Rasgulla 5 pcs",
-          "quantity": 1,
-          "price": 265,
-          "img": "https://i0.wp.com/www.ramasrey.com/wp-content/uploads/2018/08/Rasgulla.jpg?resize=300%2C300&ssl=1"
-        },
-        {
-          "id": 31,
-          "pcategory": "Rasgulla",
-          "pname": "Rasgulla 5 pcs",
-          "quantity": 1,
-          "price": 265,
-          "img": "https://i0.wp.com/www.ramasrey.com/wp-content/uploads/2018/08/Rasgulla.jpg?resize=300%2C300&ssl=1"
-        }
-      ],
-      "name": "Sujeet",
-      "total": 1405,
-      "address": "Ni pta, LKO, UP, 226012",
-      "mob_number": "9125316423",
-      "id": "M2uf_Y1"
-    },
-    {
-      "date": "2/8/122",
-      "userid": "9125316423",
-      "orderitems": [
-        {
-          "id": 9,
-          "pcategory": "Burfi",
-          "pname": "Mewa Bite (24 Pcs) 500g",
-          "quantity": 1,
-          "price": 1395,
-          "img": "https://www.madhurimasweets.com/wp-content/uploads/2022/02/Mewa-Bite-24-300x300.jpg"
-        },
-        {
-          "id": 10,
-          "pcategory": "Burfi",
-          "pname": "Mewa Bite (35 Pcs) 750g",
-          "quantity": 1,
-          "price": 1998,
-          "img": "https://www.madhurimasweets.com/wp-content/uploads/2022/02/Mewa-Bite-35-300x300.jpg"
-        }
-      ],
-      "name": "rdf",
-      "total": 3393,
-      "address": "ftyrtf, yrtf, yrtfy, rtfy",
-      "mob_number": "tfdyr",
-      "id": "ggXKDPc"
+      "name": "SDF",
+      "total": 475,
+      "address": "DFS, DF, SDF, SDF",
+      "mob_number": "SDFS",
+      "id": "Mn4BZ1Y"
     }
   ],
   "products": [

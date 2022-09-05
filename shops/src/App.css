@@ -1,3 +1,6 @@
+html{
+  scroll-behavior: smooth;
+}
 .heading{
   color: #E6B578;
   font-size: 4vw;
@@ -425,6 +428,20 @@ cursor: pointer;
   margin: 5px 10px;
   display: flex;
   justify-content: space-between;
+}
+.applybtn{
+  margin-top: 10px;
+  width: max-content;
+  padding: 5px 10px;
+  background-color: #e9a24c;
+  color: white;
+  font-size: 18px;
+  border-radius: 4px;
+  height: 20px;
+  cursor: pointer;
+}
+.applybtn:hover{
+  background-color: #e68815;
 }
 @media (max-width:800px){
   .productdetailspage{

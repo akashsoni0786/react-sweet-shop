@@ -16,6 +16,7 @@ import Cart from "./Cart";
 import Checkout from "./Checkout";
 import Orders from "./Orders";
 import SearchPage from "./Search";
+import AllProducts from "./AllCategory";
 function App() {
   const gototop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -31,6 +32,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/allcategory" element={<AllProducts />} />
       </Routes>
 
       <div onClick={gototop} className="frontbtns">

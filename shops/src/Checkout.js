@@ -1,9 +1,22 @@
-import { getDialogContentTextUtilityClass, TextField } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  getDialogContentTextUtilityClass,
+  Slide,
+  TextField,
+} from "@mui/material";
 import React, { useState } from "react";
 import { contxtname } from "./Context";
 import apicall from "./db.js";
 import { v4 as uid } from "uuid";
 import { useNavigate } from "react-router-dom";
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 const Checkout = () => {
   const contxt = React.useContext(contxtname);
   const navigate = useNavigate();
@@ -14,7 +27,9 @@ const Checkout = () => {
   const [state, setState] = useState("");
   const [pin, setPin] = useState("");
   const [ttl, setTtl] = useState("");
-
+  const [offer, setOffer] = useState("");
+  const [ttldis, setTtlDis] = useState(0);
+  const [open, setOpen] = React.useState(false);
   React.useEffect(() => {
     let total = 0;
     contxt.addtocartstate.map((i) => {
@@ -24,10 +39,18 @@ const Checkout = () => {
     });
     setTtl(total);
   }, contxt.cartcount);
-
+  const discount = () => {
+    if(offer === "AKASH100"){
+      setTtlDis(100);
+    }
+    else{
+      alert("Enter valid code")
+    }
+    
+  };
   const placeorder = async () => {
     if (name == "" || home_no == "" || city == "" || state == "" || pin == "") {
-      alert("All field are mendotary");
+      handleClickOpen();
     } else {
       let items = {
         id: uid,
@@ -40,7 +63,7 @@ const Checkout = () => {
         userid: contxt.userID,
         orderitems: contxt.addtocartstate,
         name: name,
-        total: ttl,
+        total: ttl-ttldis,
         address: home_no + ", " + city + ", " + state + ", " + pin,
         mob_number: mob_no,
       };
@@ -65,9 +88,28 @@ const Checkout = () => {
       setTtl(0);
     }
   };
+
+  const handleClickOpen = (id) => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <>
-      {" "}
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"All fields are mandatory?"}</DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose}>Ok</Button>
+        </DialogActions>
+      </Dialog>{" "}
       <h1 style={{ marginTop: "100px", marginLeft: "20px" }}>Checkout </h1>
       <div className="productdetailspage">
         <div
@@ -129,9 +171,20 @@ const Checkout = () => {
         </div>
         <hr />
         <div className="detailprocartdiv">
-          <p className="detailproname">
-            Registered mobile number :{contxt.userID}
-          </p>
+          <div style={{ display: "flex", flexWrap: "wrap" }}>
+            <TextField
+              sx={{ width: "80%" }}
+              id="standard-basic"
+              label="Enter 'AKASH100' and get 100 rupees cashback"
+              variant="standard"
+              onChange={(e) => {
+                setOffer(e.target.value);
+              }}
+            />
+            <div onClick={discount} className="applybtn">
+              Apply
+            </div>
+          </div>
           <p className="detailproname">
             <u>Details</u>
           </p>
@@ -141,11 +194,11 @@ const Checkout = () => {
           </div>
           <div className="specicationdetails">
             <p>Total : </p>
-            <p> &nbsp;&nbsp; ₹{ttl}</p>
+            <p> &nbsp;&nbsp; ₹{ttl-ttldis}</p>
           </div>
           <div className="specicationdetails">
             <p>Total Discount : </p>
-            <p> &nbsp;&nbsp; ₹{0}</p>
+            <p> &nbsp;&nbsp; ₹{ttldis}</p>
           </div>
           <hr />
           <div className="cartbox">

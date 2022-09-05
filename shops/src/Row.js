@@ -13,7 +13,8 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-  
+import CancelIcon from '@mui/icons-material/Cancel';
+import { Tooltip } from "@mui/material";
 Row.propTypes = {
     row: PropTypes.shape({
       calories: PropTypes.number.isRequired,
@@ -51,6 +52,12 @@ function Row(props) {
           </TableCell>
           <TableCell align="left">{props.uname}</TableCell>
           <TableCell align="left">{props.address}</TableCell>
+          <TableCell align="right">
+            <Tooltip title="Cancel Your order">
+            <IconButton
+          onClick={props.cancel}
+          ><CancelIcon sx={{color:"red"}}/>
+            </IconButton></Tooltip></TableCell>
           <TableCell align="right">{props.date}</TableCell>
           <TableCell align="right">{props.total}</TableCell>
         </TableRow>

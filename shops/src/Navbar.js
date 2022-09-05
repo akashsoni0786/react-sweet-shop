@@ -1,6 +1,7 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
+import apicall from "./db.js";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -252,7 +253,7 @@ export default function PrimarySearchAppBar() {
           </ListItemButton>
         </ListItem>
       </List>
-      <Divider />
+      {/* <Divider />
       <List>
         {contxt.userID == "" ? (
           <ListItem key="Login" disablePadding>
@@ -288,8 +289,8 @@ export default function PrimarySearchAppBar() {
             </ListItemIcon>
             <ListItemText primary="Contact Us" />
           </ListItemButton>
-        </ListItem>
-      </List>
+        </ListItem> */}
+      {/* </List> */}
     </Box>
   );
   const renderMobileMenu = (
@@ -320,6 +321,21 @@ export default function PrimarySearchAppBar() {
             </IconButton>
           </Tooltip>
           <p>Home</p>
+        </MenuItem>
+      </Link>
+
+      <Link to="/allcategory" style={{ textDecoration: "none", color: "black" }}>
+        <MenuItem onClick={handleMobileMenuClose}>
+          <Tooltip title="Cart">
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+            >
+              <HomeIcon />
+            </IconButton>
+          </Tooltip>
+          <p>All Category</p>
         </MenuItem>
       </Link>
 
@@ -471,12 +487,24 @@ export default function PrimarySearchAppBar() {
   };
   const logout = () => {
     contxt.setUserID("");
+    navigate("/");
+    contxt.addtocartstate.map(async (i) => {
+      try {
+   
+        await apicall.delete(`/addtocart/${i.id}`);
+        contxt.setAddtocartstate([]);
+        contxt.setCartCount(0);
+      } catch (er) {
+        console.log(er);
+      }
+    });
   };
   
   var search_val = [];
   const search_products = (e) => {
     navigate("/search");
     var searchtext = e.target.value;
+
     contxt.products.map((i) => {
       if (i.pname.toLowerCase().includes(searchtext))
        {
@@ -484,6 +512,8 @@ export default function PrimarySearchAppBar() {
         contxt.setSearchtxtar(search_val);
       }
     });
+ 
+    
   };
 
   return (
@@ -670,7 +700,6 @@ export default function PrimarySearchAppBar() {
                 </NavLink>
               </IconButton>
             </Tooltip>
-
             <Tooltip title="Categories">
               <IconButton
                 size="large"
@@ -678,11 +707,23 @@ export default function PrimarySearchAppBar() {
                 aria-label="account of current user"
                 aria-controls={menuId}
                 aria-haspopup="true"
-                // onClick={handleProfileMenuOpen}
+                onClick={()=>{navigate("/allcategory")}}
+                color="inherit"
+              >
+                <Typography sx={txtstyle}>All Category</Typography>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Categories">
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
                 onClick={toggleDrawer("right", true)}
                 color="inherit"
               >
-                <Typography sx={txtstyle}>Catrgory</Typography>
+                <Typography sx={txtstyle}>Category</Typography>
               </IconButton>
             </Tooltip>
             {contxt.userID === "" ? (

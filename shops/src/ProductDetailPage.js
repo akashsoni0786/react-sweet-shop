@@ -72,7 +72,7 @@ const ProductDetailPage = (props) => {
   };
 
   return (
-    <div>
+    <div style={{marginTop:"100px"}}>
       {contxt.products.map((i) => {
         if (contxt.detailid == i.id) {
           return (

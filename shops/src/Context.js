@@ -4,7 +4,8 @@ export const contxtname = React.createContext();
 export const Context = (props) => {
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
-  const [cat_products, setCat_Products] = useState([]);
+  const [cat_products, setCat_Products] = useState('');
+  const [cat_productsarr, setCat_Productsarr] = useState([]);
   const [orders, setOrders] = useState([]);
   const [detailid, setDetailid] = useState('');
   const [cartcount, setCartCount] = useState(0);
@@ -53,7 +54,9 @@ export const Context = (props) => {
         cartcount:cartcount, 
         setCartCount:setCartCount,
         searchtxtar:searchtxtar,
-        setSearchtxtar:setSearchtxtar
+        setSearchtxtar:setSearchtxtar,
+        cat_productsarr:cat_productsarr, 
+        setCat_Productsarr:setCat_Productsarr
       }}
     >
       {props.children}
