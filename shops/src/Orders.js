@@ -86,19 +86,19 @@ export default function Orders() {
       </Dialog>
       {available == "yes" ? (
         <div className="same">
-          <div sx={{ margin: "130px 10px" }}>
-            <h1>My Orders</h1>
+          <div>
+            <h1 style={{marginTop:"100px",textAlign:"center"}}><u>My Orders</u></h1>
             <TableContainer component={Paper}>
               <Table aria-label="collapsible table">
                 <TableHead>
                   <TableRow>
                     <TableCell />
-                    <TableCell>Order ID</TableCell>
-                    <TableCell align="left">Customer</TableCell>
-                    <TableCell align="left">Address</TableCell>
-                    <TableCell align="right">Cancel Order</TableCell>
-                    <TableCell align="right">Date</TableCell>
-                    <TableCell align="right">Total</TableCell>
+                    <TableCell><b>Order ID</b></TableCell>
+                    <TableCell align="left"><b>Customer</b></TableCell>
+                    <TableCell align="left"><b>Address</b></TableCell>
+                    <TableCell align="right"><b>Cancel Order</b></TableCell>
+                    <TableCell align="right"><b>Date</b></TableCell>
+                    <TableCell align="right"><b>Total</b></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

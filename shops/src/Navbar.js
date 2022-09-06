@@ -293,6 +293,21 @@ export default function PrimarySearchAppBar() {
       {/* </List> */}
     </Box>
   );
+  var search_val = [];
+  const search_products = (e) => {
+    navigate("/search");
+    var searchtext = e.target.value;
+
+    contxt.products.map((i) => {
+      if (i.pname.toLowerCase().includes(searchtext))
+       {
+        search_val = [...search_val, i];
+        contxt.setSearchtxtar(search_val);
+      }
+    });
+ 
+    
+  };
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -309,6 +324,19 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      <MenuItem>
+      <Search sx={{ backgroundColor: "white" }}>
+            <SearchIconWrapper>
+              <SearchIcon sx={{ color: "black" }} />
+            </SearchIconWrapper>
+            <StyledInputBase
+              sx={{ color: "black" }}
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+              onKeyUp={search_products}
+            />
+          </Search>
+      </MenuItem>
       <Link to="/" style={{ textDecoration: "none", color: "black" }}>
         <MenuItem onClick={handleMobileMenuClose}>
           <Tooltip title="Cart">
@@ -500,21 +528,21 @@ export default function PrimarySearchAppBar() {
     });
   };
   
-  var search_val = [];
-  const search_products = (e) => {
-    navigate("/search");
-    var searchtext = e.target.value;
+  // var search_val = [];
+  // const search_products = (e) => {
+  //   navigate("/search");
+  //   var searchtext = e.target.value;
 
-    contxt.products.map((i) => {
-      if (i.pname.toLowerCase().includes(searchtext))
-       {
-        search_val = [...search_val, i];
-        contxt.setSearchtxtar(search_val);
-      }
-    });
+  //   contxt.products.map((i) => {
+  //     if (i.pname.toLowerCase().includes(searchtext))
+  //      {
+  //       search_val = [...search_val, i];
+  //       contxt.setSearchtxtar(search_val);
+  //     }
+  //   });
  
     
-  };
+  // };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -645,24 +673,11 @@ export default function PrimarySearchAppBar() {
         </Box>
       </Modal>
 
-      <div>
-        {["left", "right", "top", "bottom"].map((anchor) => (
-          <React.Fragment key={anchor}>
-            <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-            <Drawer
-              anchor={anchor}
-              open={state[anchor]}
-              onClose={toggleDrawer(anchor, false)}
-            >
-              {list(anchor)}
-            </Drawer>
-          </React.Fragment>
-        ))}
-      </div>
+     
 
       <AppBar
         position="fixed"
-        sx={{ zIndex: "99", backgroundColor: "#f1e2ce" }}
+        sx={{zIndex: "99", backgroundColor: "#f1e2ce",maxWidth:"100vw",left: '0' }}
       >
         <Toolbar>
           <img
@@ -672,7 +687,21 @@ export default function PrimarySearchAppBar() {
             src="https://image1.jdomni.in/storeLogo/29092020/C4/3E/F9/DA80826D535A06444A27BC724F_1601398281684.png?output-format=webp"
           />
 
-          <Search sx={{ backgroundColor: "white" }}>
+          {/* <Search sx={{ backgroundColor: "white" }}>
+            <SearchIconWrapper>
+              <SearchIcon sx={{ color: "black" }} />
+            </SearchIconWrapper>
+            <StyledInputBase
+              sx={{ color: "black" }}
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+              onKeyUp={search_products}
+            />
+          </Search> */}
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: "none", md: "flex" } }}
+          >
+            <Search sx={{ backgroundColor: "white" }}>
             <SearchIconWrapper>
               <SearchIcon sx={{ color: "black" }} />
             </SearchIconWrapper>
@@ -683,8 +712,6 @@ export default function PrimarySearchAppBar() {
               onKeyUp={search_products}
             />
           </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Tooltip title="Home">
               <IconButton
                 size="large"
@@ -812,7 +839,21 @@ export default function PrimarySearchAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
+
       {renderMobileMenu}
+      <div>
+        {["right"].map((anchor) => (
+          // <React.Fragment key={anchor}>
+            <Drawer
+              anchor={anchor}
+              open={state[anchor]}
+              onClose={toggleDrawer(anchor, false)}
+            >
+              {list('right')}
+            </Drawer>
+          // </React.Fragment>
+        ))}
+      </div>
       {/* {renderMenu} */}
     </Box>
   );

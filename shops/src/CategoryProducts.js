@@ -137,7 +137,7 @@ const CategoryProducts = () => {
     <>
       <div
         style={{
-          marginTop: "40px",
+          marginTop: "90px",
           display: "flex",
           justifyContent: "space-between",
           flexWrap: "wrap",
@@ -191,11 +191,12 @@ const CategoryProducts = () => {
           {" "}
           <div
             style={{
+              marginTop: "30px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               flexDirection: "column",
-              marginTop: "100px",
+             
             }}
             className="categorypage"
           >

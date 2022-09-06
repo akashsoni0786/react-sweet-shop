@@ -168,8 +168,8 @@ cursor: pointer;
   align-items: center;
   margin-top:100px;
   position: fixed;
-  bottom: 10px;
-  right: 10px;
+  bottom: 100px;
+  left: 10px;
 }
 .whatsapp{
   cursor: pointer;
@@ -182,7 +182,7 @@ cursor: pointer;
   margin-top:100px;
   position: fixed;
   bottom: 10px;
-  right: 90px;
+  left: 90px;
 }
 .cart{
   cursor: pointer;

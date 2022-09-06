@@ -136,7 +136,7 @@ const SearchPage = () => {
     <>
       <div
         style={{
-          marginTop: "40px",
+          marginTop: "90px",
           display: "flex",
           justifyContent: "space-between",
           flexWrap: "wrap",
